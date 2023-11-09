@@ -111,9 +111,22 @@ const MyTodos = () => {
   //eliminar tareas
   const deleteTask = async (id) => {
     let newArr = myListTasks.filter((_, index) => index != id);
+    try {
+      let response = await fetch(urlBase, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newArr),
+      });
+      if (response.ok) {
+        getTask()
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
 
-    setMyListTasks(newArr);
-    updateFetch();
   };
 
   //funcion para mostrar alerta al borrar usuario
